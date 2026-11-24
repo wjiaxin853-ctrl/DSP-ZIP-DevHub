@@ -55,7 +55,7 @@ async function chat(req, res) {
     const upstream = await fetch(new URL('/api/chat', ollamaBaseUrl), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model, messages: body.messages, stream: false, think: false }),
+      body: JSON.stringify({ model, messages: [{ role: 'system', content: '你是研发助手，请使用简体中文回答用户的问题。' }, ...body.messages], stream: false, think: false }),
       signal: AbortSignal.timeout(120000),
     });
     if (!upstream.ok) {
